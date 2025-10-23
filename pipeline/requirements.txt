@@ -3,5 +3,3 @@ scikit-learn
 joblib
 fsspec
 gcsfs
-kfp
-EOF
