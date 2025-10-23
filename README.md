@@ -1,2 +1,3 @@
 # Assignment1
-We house the house price prediction winning model and dataset from Kaggle. Link is here: https://www.kaggle.com/code/heyrobin/house-price-prediction-beginner-s-notebook
+We use the penguins dataset, which can be imported via Seaborn, and use the model from this kaggle link:
+https://www.kaggle.com/code/paulgreber/logistic-regression-with-palmer-s-penguins
