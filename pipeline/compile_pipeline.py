@@ -6,7 +6,7 @@ PROJECT = "assignment1-476007"
 REGION  = "us-central1"
 BUCKET  = "assignment1group3"                   
 IMAGE   = f"{REGION}-docker.pkg.dev/{PROJECT}/mlrepo/penguins-components:latest"
-PIPELINE_ROOT = f"gs://{BUCKET}/runs"
+PIPELINE_ROOT = "gs://assignment1group3/runs"
 
 @dsl.component(base_image=IMAGE)
 def preprocess_op(input_csv: str, out_dir: str):
