@@ -2,10 +2,11 @@ import os
 from kfp import dsl
 from kfp.dsl import component
 
-PROJECT = os.getenv("PROJECT_ID")
-REGION  = os.getenv("REGION", "us-central1")
-BUCKET  = os.getenv("BUCKET")                    # e.g., assignment1group3
-IMAGE   = os.getenv("PIPELINE_IMAGE")            # e.g., us-central1-docker.pkg.dev/<proj>/mlrepo/penguins-components:<sha>
+PROJECT = "assignment1-476007"
+REGION  = "us-central1"
+BUCKET  = "assignment1group3"                   
+IMAGE   = f"{REGION}-docker.pkg.dev/{PROJECT}/mlrepo/penguins-components:latest"
+PIPELINE_ROOT = f"gs://{BUCKET}/runs"
 
 @dsl.component(base_image=IMAGE)
 def preprocess_op(input_csv: str, out_dir: str):
