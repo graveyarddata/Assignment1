@@ -32,7 +32,7 @@ def what_penguin():
 
         # ---- CALL THE API (connection to ML prediction) ----
         try:
-            r = requests.post(f"{PREDICTOR_API}/predict", json=payload)
+            r = requests.post(f"{PREDICTOR_API}/what_penguin_are_you", json=payload)
             r.raise_for_status() # will give an error if the API is down
             species = r.json()["species"] # model will return Adelie/Chinstrap/Gentoo
         except Exception as e:
@@ -45,7 +45,9 @@ def what_penguin():
     # The 405 Method Not Allowed indicates that the app does not allow the users to perform any other HTTP method (e.g., PUT and  DELETE) for
     # '/what_penguin_are_you' path
 
-# The code within this conditional block will only run the python file is executed as a
-# script. See https://realpython.com/if-name-main-python/
+
+
+# ------
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=int(os.getenv("PORT", "5001")))
+
