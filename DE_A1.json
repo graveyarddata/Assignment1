@@ -1,28 +1,56 @@
+{
   "steps": [
     {
       "name": "gcr.io/cloud-builders/docker",
-      "args": ["build", "-t", "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1", "./serving/prediction-api"]
+      "args": [
+        "build",
+        "-t",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
+        "./serving/prediction-api"
+      ]
     },
     {
       "name": "gcr.io/cloud-builders/docker",
-      "args": ["build", "-t", "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1", "./serving/prediction-ui"]
+      "args": [
+        "build",
+        "-t",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1",
+        "./serving/prediction-ui"
+      ]
     },
     {
       "name": "gcr.io/cloud-builders/docker",
-      "args": ["push", "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1"]
+      "args": [
+        "push",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1"
+      ]
     },
     {
       "name": "gcr.io/cloud-builders/docker",
-      "args": ["push", "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1"]
+      "args": [
+        "push",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1"
+      ]
     },
     {
       "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
       "entrypoint": "gcloud",
       "args": [
-        "run","deploy","prediction-api",
-        "--image","${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
-        "--region","us-central1","--platform","managed",
-        "--port","5000","--cpu","2","--memory","4G",
+        "run",
+        "deploy",
+        "prediction-api",
+        "--image",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
+        "--region",
+        "us-central1",
+        "--platform",
+        "managed",
+        "--port",
+        "5000",
+        "--cpu",
+        "2",
+        "--memory",
+        "4G",
         "--allow-unauthenticated"
       ]
     },
@@ -39,7 +67,5 @@
     "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
     "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1"
   ],
-  "options": {
-    "logging": "CLOUD_LOGGING_ONLY"
-  }
-
+  "options": { "logging": "CLOUD_LOGGING_ONLY" }
+}
