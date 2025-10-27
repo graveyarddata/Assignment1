@@ -8,34 +8,36 @@ import os, tempfile, joblib, numpy as np
 # Flask constructor
 app = Flask(__name__)
 
-# Turn this on in Cloud Run to load the model from GCS
-USE_GCS = os.getenv("USE_GCS", "false").lower() == "true"
-if USE_GCS:
-    from google.cloud import storage
+# ---- MODEL SETUP (GCS only) ----
+from google.cloud import storage
+import os, tempfile, joblib
 
-# ---- MODEL SETUP TO CONNECT TO STORAGE ----
-# Configure these environment variables in Cloud Run; defaults for local testing
-MODEL_BUCKET = os.getenv("MODEL_BUCKET", "assignment1group3")
-MODEL_PATH = os.getenv("MODEL_PATH", "models/model.pkl")   # path inside bucket
-LOCAL_MODEL = os.getenv("LOCAL_MODEL", "./model.pkl")      # used for local testing
+# Fail fast if these aren't set
+MODEL_BUCKET = os.environ["MODEL_BUCKET", "assignment1group3"]
+MODEL_BLOB   = os.environ.get("MODEL_BLOB", "models/model.pkl")
 
 def load_model():
-    """Load model from GCS if USE_GCS=true, else from local file."""
+    """Load model from GCS. Raise if missing/failed."""
     try:
-        if USE_GCS:
-            client = storage.Client()
-            blob = client.bucket(MODEL_BUCKET).blob(MODEL_PATH)
-            with tempfile.TemporaryDirectory() as td:
-                tmp_path = os.path.join(td, "model.pkl")
-                blob.download_to_filename(tmp_path)
-                return joblib.load(tmp_path)
-        else:
-            return joblib.load(LOCAL_MODEL)
-    except Exception as e:
-        # Log in real life; for now raise to fail fast at startup
-        raise RuntimeError(f"Failed to load model: {e}")
+        client = storage.Client()
+        bucket = client.bucket(MODEL_BUCKET)
+        blob = bucket.blob(MODEL_BLOB)
 
-# Load the model once at startup
+        # Explicit existence check gives clearer error
+        if not blob.exists(client):
+            raise FileNotFoundError(f"gs://{MODEL_BUCKET}/{MODEL_BLOB} not found")
+
+        with tempfile.NamedTemporaryFile(suffix=".pkl", delete=False) as tmp:
+            blob.download_to_filename(tmp.name)
+            tmp_path = tmp.name
+
+        return joblib.load(tmp_path)
+
+    except Exception as e:
+        # No local fallback — fail fast
+        raise RuntimeError(f"Failed to load model from GCS: {e}")
+
+# Load the model once at startup (will raise on failure)
 model = load_model()
 
 # ---- API ROUTE ----
@@ -57,7 +59,7 @@ def check_penguin():
         }), 200
 
     # POST: do the actual prediction
-    data = request.get_json(silent=True)
+    data = request.get_json()
     try:
         bl = float(data["bill_length_mm"])
         bd = float(data["bill_depth_mm"])
@@ -76,4 +78,4 @@ def check_penguin():
 
 # -------
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.getenv("PORT", "5000")))
+    app.run(host='0.0.0.0', port=int(os.getenv("PORT", "8080")))
