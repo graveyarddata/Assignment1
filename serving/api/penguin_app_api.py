@@ -13,7 +13,7 @@ from google.cloud import storage
 import os, tempfile, joblib
 
 # Fail fast if these aren't set
-MODEL_BUCKET = os.environ["MODEL_BUCKET", "assignment1group3"]
+MODEL_BUCKET = os.environ("MODEL_BUCKET", "assignment1group3")
 MODEL_BLOB   = os.environ.get("MODEL_BLOB", "models/model.pkl")
 
 def load_model():
