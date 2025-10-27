@@ -34,7 +34,8 @@ def what_penguin():
         try:
             r = requests.post(f"{PREDICTOR_API}/what_penguin_are_you", json=payload)
             r.raise_for_status() # will give an error if the API is down
-            species = r.json()["species"] # model will return Adelie/Chinstrap/Gentoo
+            j = r.json()
+            species = (j.get("species") or "").strip() # model will return Adelie/Chinstrap/Gentoo
         except Exception as e:
             species = f"Error: {e}"
         return render_template("response_page.html", prediction_variable=species)
