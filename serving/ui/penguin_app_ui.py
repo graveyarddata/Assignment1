@@ -8,7 +8,7 @@ import os, requests
 app = Flask(__name__, template_folder='html form and response pages')
 
 # Cloud Build/Run will inject this env to point at the API service URL (and will otherwise run locally)
-PREDICTOR_API = os.getenv("PREDICTOR_API", "https://prediction-api-102686535191.us-central1.run.app/")
+PREDICTOR_API = os.getenv("PREDICTOR_API", "https://prediction-api-102686535191.us-central1.run.app")
 
 # A decorator used to tell the application which URL is associated with the function
 @app.route('/what_penguin_are_you', methods=["GET", "POST"])
