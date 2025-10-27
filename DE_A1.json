@@ -46,7 +46,7 @@
         "--platform",
         "managed",
         "--port",
-        "5000",
+        "8080",
         "--cpu",
         "2",
         "--memory",
@@ -68,7 +68,7 @@
         "--platform",
         "managed",
         "--port",
-        "5000",
+        "8080",
         "--cpu",
         "2",
         "--memory",
@@ -85,6 +85,7 @@
   ],
   "options": { "logging": "CLOUD_LOGGING_ONLY" }
 }
+
 
 
 
