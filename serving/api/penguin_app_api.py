@@ -71,19 +71,8 @@ def check_penguin():
     X = np.array([[bl, bd, fl, bm]])
 
     try:
-        pred = model.predict(X)[0]  # could be 'Adelie' *or* an int code
-        if isinstance(pred, str):
-            species = pred  # already the final label ✅
-        else:
-            # Try to map using classes_ if it holds strings
-            classes = getattr(model, "classes_", None)
-            if classes is not None and all(isinstance(c, str) for c in classes):
-                species = classes[int(pred)]
-            else:
-                # If you trained with LabelEncoder(y) -> you MUST persist it and load it here:
-                # label_encoder.inverse_transform([pred])[0]
-                # TEMP: last-resort fallback (unsafe; remove when encoder is persisted)
-                species = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"}.get(int(pred), str(pred))
+        pred = model.predict(X)  # could be 'Adelie' *or* an int code
+        species = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"}.get(pred[0])
         return jsonify(species=species), 200
     except Exception as e:
         print("DEBUG predict error:", e, "type(pred)=", type(pred), "classes_=", getattr(model, "classes_", None),
