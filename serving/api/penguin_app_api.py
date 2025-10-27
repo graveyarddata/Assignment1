@@ -71,8 +71,8 @@ def check_penguin():
     X = np.array([[bl, bd, fl, bm]])
 
     try:
-        pred = model.predict(X)  # could be 'Adelie' *or* an int code
-        species = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"}.get(pred[0])
+        pred = model.predict(X)
+        species = pred[0]
         return jsonify(species=species), 200
     except Exception as e:
         print("DEBUG predict error:", e, "type(pred)=", type(pred), "classes_=", getattr(model, "classes_", None),
