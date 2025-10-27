@@ -6,7 +6,7 @@
         "build",
         "-t",
         "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/api:0.0.1",
-        "./serving/prediction-api"
+        "./serving/api"
       ]
     },
     {
@@ -15,7 +15,7 @@
         "build",
         "-t",
         "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/ui:0.0.1",
-        "./serving/prediction-ui"
+        "./serving/ui"
       ]
     },
     {
@@ -85,5 +85,6 @@
   ],
   "options": { "logging": "CLOUD_LOGGING_ONLY" }
 }
+
 
 
