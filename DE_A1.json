@@ -5,7 +5,7 @@
       "args": [
         "build",
         "-t",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/api:0.0.1",
         "./serving/prediction-api"
       ]
     },
@@ -14,7 +14,7 @@
       "args": [
         "build",
         "-t",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/ui:0.0.1",
         "./serving/prediction-ui"
       ]
     },
@@ -22,14 +22,14 @@
       "name": "gcr.io/cloud-builders/docker",
       "args": [
         "push",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1"
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/api:0.0.1"
       ]
     },
     {
       "name": "gcr.io/cloud-builders/docker",
       "args": [
         "push",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1"
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/ui:0.0.1"
       ]
     },
     {
@@ -40,7 +40,7 @@
         "deploy",
         "prediction-api",
         "--image",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/api:0.0.1",
         "--region",
         "us-central1",
         "--platform",
@@ -62,7 +62,7 @@
         "deploy",
         "prediction-ui",
         "--image",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/ui:0.0.1",
         "--region",
         "us-central1",
         "--platform",
@@ -80,9 +80,10 @@
     }
   ],
   "images": [
-    "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-api:0.0.1",
-    "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/prediction-ui:0.0.1"
+    "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/api:0.0.1",
+    "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/ui:0.0.1"
   ],
   "options": { "logging": "CLOUD_LOGGING_ONLY" }
 }
+
 
