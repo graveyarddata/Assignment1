@@ -68,13 +68,14 @@ def check_penguin():
     except (KeyError, TypeError, ValueError):
         return jsonify(error="Invalid or missing fields"), 400
 
-    X = np.array([[bl, bd, fl, bm]], dtype=float)
+    X = [bl, bd, fl, bm]
     try:
         pred = model.predict(X)[0] # expect label: Adelie/Chinstrap/Gentoo
+        pred_to_species = {0: 'Adelie', 1: 'Chinstrap', 2: 'Gentoo'}
+        pred_names = pred_to_species[pred]
     except Exception as e:
         return jsonify(error=f"Prediction failed: {e}"), 500
-    return jsonify(species=str(pred)), 200
-
+    return jsonify(species=str(pred_names)), 200
 
 # -------
 if __name__ == '__main__':
