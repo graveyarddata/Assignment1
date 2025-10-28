@@ -1,3 +1,4 @@
 google-cloud-aiplatform
 gcsfs
 google-cloud-storage
+argparse
