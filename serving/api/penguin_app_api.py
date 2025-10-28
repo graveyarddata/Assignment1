@@ -26,10 +26,10 @@ model = load_model()
 
 # ---- API ROUTE ----
 # A decorator used to tell the application which URL is associated with the function
-@app.route('/what_penguin_are_you', methods=["GET", "POST"])
+@app.route('/what_penguin_are_you', methods=['GET', 'POST'])
 def check_penguin():
-    # GET: describe how to use this endpoint
-    if request.method == "GET":
+    # GET: simple “how to use” doc
+    if request.method == 'GET':
         return jsonify({
             "endpoint": "/what_penguin_are_you",
             "use": "POST JSON with four fields to get a species prediction",
@@ -44,23 +44,17 @@ def check_penguin():
 
     # POST: do the actual prediction
     data = request.get_json()
-
-    # Extract input values
     bl = float(data["bill_length_mm"])
     bd = float(data["bill_depth_mm"])
     fl = float(data["flipper_length_mm"])
     bm = float(data["body_mass_g"])
 
     X = np.array([[bl, bd, fl, bm]])
+    raw = int(model.predict(X)[0])  # 0/1/2
 
-    try:
-        pred = model.predict(X)
-        raw = int(pred[0]) # retrieves the output as an integer (class level; either 0,1, or 2)
-        species_map = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"} # maps the integer to the correct string value
-        label = species_map.get(raw, "Unknown")
-
-        return jsonify(species=label)
-
+    species_map = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"}
+    label = species_map[raw]
+    return jsonify(species=label), 200
 
 # -------
 if __name__ == '__main__':
