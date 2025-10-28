@@ -17,27 +17,19 @@ def what_penguin():
         return render_template("input_form_page.html")
 
     elif request.method == "POST":
-        bl = float(request.form.get("bl"))  # getting input with name = bl from HTML form
-        bd = float(request.form.get("bd"))
-        fl = float(request.form.get("fl"))
-        bm = float(request.form.get("bm"))
-
         # Put the payload in a JSON file for the API
         payload = {
-            "bill_length_mm": bl,
-            "bill_depth_mm": bd,
-            "flipper_length_mm": fl,
-            "body_mass_g": bm
+            "bill_length_mm": float(request.form.get("bl")),  # getting input with name = bl from HTML form
+            "bill_depth_mm": float(request.form.get("bd")),
+            "flipper_length_mm": float(request.form.get("fl")),
+            "body_mass_g": float(request.form.get("bm"))
         }
 
         # ---- CALL THE API (connection to ML prediction) ----
-        try:
-            r = requests.post(f"{PREDICTOR_API}/what_penguin_are_you", json=payload)
-            r.raise_for_status() # will give an error if the API is down
-            j = r.json()
-            species = (j.get("species") or "").strip() # model will return Adelie/Chinstrap/Gentoo
-        except Exception as e:
-            species = f"Error: {e}"
+        r = requests.post(f"{PREDICTOR_API}/what_penguin_are_you", json=payload)
+        r.raise_for_status() # will give an error if the API is down
+        j = r.json()
+        species = str(j.get("species", "")).strip()
         return render_template("response_page.html", prediction_variable=species)
 
         # --- END OF API CALL -----
