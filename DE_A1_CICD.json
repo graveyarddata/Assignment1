@@ -11,7 +11,7 @@
         "--project=$PROJECT_ID",
         "--region=us-central1",
         "--pipeline_root=gs://${_TEMP_REPO}",
-        "--parameters_file=./data/parameters.json"   // or the exact flag your image expects
+        "--parameters_file=./data/parameters.json"   
       ]
     }
   ],
