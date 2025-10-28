@@ -30,6 +30,7 @@ def what_penguin():
         r.raise_for_status() # will give an error if the API is down
         j = r.json()
         species = str(j.get("species", "")).strip()
+        print("API said:", j)  # should be {'species': 'Adelie'}
         return render_template("response_page.html", prediction_variable=species)
 
         # --- END OF API CALL -----
