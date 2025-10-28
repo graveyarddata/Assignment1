@@ -10,34 +10,18 @@ app = Flask(__name__)
 
 # ---- MODEL SETUP (GCS only) ----
 from google.cloud import storage
-import os, tempfile, joblib
+import joblib, os
 
-# Fail fast if these aren't set
 MODEL_BUCKET = os.getenv("MODEL_BUCKET", "assignment1group3")
-MODEL_BLOB   = os.getenv("MODEL_BLOB", "models/model.pkl")
+MODEL_BLOB = os.getenv("MODEL_BLOB", "models/model.pkl")
 
 def load_model():
-    """Load model from GCS. Raise if missing/failed."""
-    try:
-        client = storage.Client()
-        bucket = client.bucket(MODEL_BUCKET)
-        blob = bucket.blob(MODEL_BLOB)
+    client = storage.Client()
+    bucket = client.bucket(MODEL_BUCKET)
+    blob = bucket.blob(MODEL_BLOB)
+    blob.download_to_filename("model.pkl")  # save directly to local file
+    return joblib.load("model.pkl")
 
-        # Explicit existence check gives clearer error
-        if not blob.exists(client):
-            raise FileNotFoundError(f"gs://{MODEL_BUCKET}/{MODEL_BLOB} not found")
-
-        with tempfile.NamedTemporaryFile(suffix=".pkl", delete=False) as tmp:
-            blob.download_to_filename(tmp.name)
-            tmp_path = tmp.name
-
-        return joblib.load(tmp_path)
-
-    except Exception as e:
-        # No local fallback — fail fast
-        raise RuntimeError(f"Failed to load model from GCS: {e}")
-
-# Load the model once at startup (will raise on failure)
 model = load_model()
 
 # ---- API ROUTE ----
