@@ -1,6 +1,6 @@
 {
   "project_id": "assignment1-476007",
-  "region": "europe-west4",
+  "region": "us-central1",
   "data_uri": "gs://assignment1group3/data/penguins_clean.csv",
   "pipeline_root": "gs://assignment1group3/runs",
   "model_dir": "gs://assignment1group3/models",
