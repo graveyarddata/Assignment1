@@ -5,3 +5,5 @@ fsspec
 gcsfs
 kfp
 EOF
+packaging
+
