@@ -65,12 +65,16 @@
     <h1>Meet your predicted penguin self!</h1>
 
     {% if prediction_variable == "Adelie" %}
+        <img src="{{ url_for('static', filename='Adelie_penguin.png') }}" alt="Adelie Penguin" width="250">
         <p>Based on your features, you’re most likely an <strong>Adélie Penguin</strong>: small, cute, and perfectly adapted to icy habitats!</p>
     {% elif prediction_variable == "Chinstrap" %}
+        <img src="{{ url_for('static', filename='Chinstrap_penguin.png') }}" alt="Chinstrap Penguin" width="250">
         <p>Our flipper-fueled analysis says you’re probably a <strong>Chinstrap Penguin</strong>: bold, vocal, and rocking that stylish black chin strap!</p>
     {% elif prediction_variable == "Gentoo" %}
+        <img src="{{ url_for('static', filename='Gentoo_penguin.png') }}" alt="Gentoo Penguin" width="250">
         <p>It looks like you’re a <strong>Gentoo Penguin</strong>: fast, adventurous, and always leading the waddle!</p>
     {% else %}
+        <img src="{{ url_for('static', filename='Random_penguin.png') }}" alt="Unknown Penguin" width="250">
         <p>Hmm... we couldn’t quite identify your penguin species. Maybe you’re a rare hybrid!</p>
     {% endif %}
 
