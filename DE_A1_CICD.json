@@ -8,7 +8,7 @@
       "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
       "args": [
         "--name=penguins-predictor-pipeline",
-        "--pipeline_spec_path=./pipeline/penguins_pipeline.yaml",   // <- adjust path
+        "--pipeline_spec_path=./pipeline/penguins_pipeline.yaml",   
         "--project=$PROJECT_ID",
         "--region=us-central1",
         "--pipeline_root=gs://${_TEMP_REPO}",
