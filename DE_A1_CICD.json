@@ -1,26 +1,20 @@
 {
- "steps": [
-
-  {
-       "name": "gcr.io/cloud-builders/gsutil",
-       "args": [
-           "cp",           
-		   "gs://${_CONF_REPO}/parameters.json",
-           ".",
-        ]
-   },
-   {
-       "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
-       "args": [
-           "--name=penguins-predictor-pipeline",           
-		   "--pipeline_def=./pipeline/penguins_pipeline.yaml",
-           "--pipeline_root=gs://${_TEMP_REPO}",         
-		   "--parameter_dict=./data/parameters.json"
-        ]
-   }
-   ],
-     "options": {
-    "logging": "CLOUD_LOGGING_ONLY"
-  }
- }
-
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/gsutil",
+      "args": ["cp", "gs://${_CONF_REPO}/parameters.json", "./parameters.json"]
+    },
+    {
+      "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
+      "args": [
+        "--name=penguins-predictor-pipeline",
+        "--pipeline_spec_path=./pipeline/penguins_pipeline.yaml",   // <- adjust path
+        "--project=$PROJECT_ID",
+        "--region=us-central1",
+        "--pipeline_root=gs://${_TEMP_REPO}",
+        "--parameter_values_file=./parameters.json"
+      ]
+    }
+  ],
+  "options": { "logging": "CLOUD_LOGGING_ONLY" }
+}
