@@ -15,7 +15,7 @@
            "--name=penguins-predictor-pipeline",           
 		   "--pipeline_def=./pipeline/penguins_pipeline.yaml",
            "--pipeline_root=gs://${_TEMP_REPO}",         
-		   "--parameter_dict=data/parameters.json"
+		   "--parameter_dict=./data/parameters.json"
         ]
    }
    ],
