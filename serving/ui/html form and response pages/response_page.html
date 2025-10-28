@@ -1,21 +1,82 @@
 <html>
 <head>
-    <title>Meet you predicted penguin self!</title>
+    <title>Meet your predicted penguin self!</title>
+    <style>
+        body {
+            background-color: #2ba0ff; /* same bright blue */
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.25);
+            max-width: 600px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+
+        strong {
+            color: #013375; /* dark blue accent for penguin name */
+            background-color: white;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+
+        a.button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            background-color: #013375;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a.button:hover {
+            background-color: #012657;
+        }
+    </style>
+
 </head>
 <body>
 
-<h1>Meet your predicted penguin self!</h1>
+<div class="container">
+    <h1>Meet your predicted penguin self!</h1>
 
-{% if prediction_variable == "Adelie" %}
+    {% if prediction_variable == "Adelie" %}
         <p>Based on your features, you’re most likely an <strong>Adélie Penguin</strong>: small, cute, and perfectly adapted to icy habitats!</p>
-{% elif prediction_variable == "Chinstrap" %}
+    {% elif prediction_variable == "Chinstrap" %}
         <p>Our flipper-fueled analysis says you’re probably a <strong>Chinstrap Penguin</strong>: bold, vocal, and rocking that stylish black chin strap!</p>
-{% elif prediction_variable == "Gentoo" %}
+    {% elif prediction_variable == "Gentoo" %}
         <p>It looks like you’re a <strong>Gentoo Penguin</strong>: fast, adventurous, and always leading the waddle!</p>
-{% else %}
-        <p>Hmm... we couldn’t quite identify your penguin species. Maybe you’re a rare hybrid! 🧬</p>
+    {% else %}
+        <p>Hmm... we couldn’t quite identify your penguin species. Maybe you’re a rare hybrid!</p>
     {% endif %}
+
+    <a href="/what_penguin_are_you" class="button">Try Again</a>
+</div>
 
 </body>
 </html>
-<!-- check https://flask.palletsprojects.com/en/2.3.x/tutorial/templates/ for information if needed -->
+
