@@ -28,7 +28,7 @@ model = load_model()
 # A decorator used to tell the application which URL is associated with the function
 @app.route('/what_penguin_are_you', methods=["GET", "POST"])
 def check_penguin():
-    # GET: describe how to use this endpoint (API doesn't serve HTML)
+    # GET: describe how to use this endpoint
     if request.method == "GET":
         return jsonify({
             "endpoint": "/what_penguin_are_you",
@@ -44,24 +44,22 @@ def check_penguin():
 
     # POST: do the actual prediction
     data = request.get_json()
-    try:
-        bl = float(data["bill_length_mm"])
-        bd = float(data["bill_depth_mm"])
-        fl = float(data["flipper_length_mm"])
-        bm = float(data["body_mass_g"])
-    except (KeyError, TypeError, ValueError):
-        return jsonify(error="Invalid or missing fields"), 400
+
+    # Extract input values
+    bl = float(data["bill_length_mm"])
+    bd = float(data["bill_depth_mm"])
+    fl = float(data["flipper_length_mm"])
+    bm = float(data["body_mass_g"])
 
     X = np.array([[bl, bd, fl, bm]])
 
     try:
         pred = model.predict(X)
-        species = pred[0]
-        return jsonify(species=species), 200
-    except Exception as e:
-        print("DEBUG predict error:", e, "type(pred)=", type(pred), "classes_=", getattr(model, "classes_", None),
-              flush=True)
-        return jsonify(error=f"Prediction failed: {e}"), 500
+        raw = int(pred[0]) # retrieves the output as an integer (class level; either 0,1, or 2)
+        species_map = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"} # maps the integer to the correct string value
+        label = species_map.get(raw, "Unknown")
+
+        return jsonify(species=label)
 
 
 # -------
