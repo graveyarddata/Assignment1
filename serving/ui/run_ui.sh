@@ -11,4 +11,4 @@ fi
 
 pip install -r requirements.txt
 
-python3 penguin_app.py
+python3 penguin_app_ui.py
