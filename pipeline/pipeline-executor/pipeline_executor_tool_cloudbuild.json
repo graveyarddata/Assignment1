@@ -1,12 +1,16 @@
 {
- "steps": [
+  "substitutions": {
+    "_LOCATION": "us-central1",
+    "_REPOSITORY": "labrepo"
+  },
+  "steps": [
     {
       "name": "gcr.io/cloud-builders/docker",
       "args": [
         "build",
-        "-t",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
-        "./pipeline/pipeline-executor/builder_tool/pipeline_executor.py"
+        "-t", "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
+        "-f", "Assignment1/pipeline/pipeline-executor/builder_tool/Dockerfile",
+        "Assignment1/pipeline/pipeline-executor/builder_tool"
       ]
     },
     {
@@ -16,8 +20,8 @@
         "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1"
       ]
     }
-   ],
-     "options": {
+  ],
+  "options": {
     "logging": "CLOUD_LOGGING_ONLY"
   }
- }
+}
