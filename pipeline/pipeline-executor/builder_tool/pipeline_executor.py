@@ -64,24 +64,6 @@ def parse_command_line_arguments():
     return args
 
 
-if __name__ == "__main__":
-    logging.basicConfig(stream=sys.stdout, level=logging.INFO,
-                        format="%(asctime)s %(levelname)s %(message)s")
-    args = parse_command_line_arguments()
-
-    run_pipeline_job(
-        name=args.name,
-        pipeline_def=args.pipeline_def,
-        pipeline_root=args.pipeline_root,
-        parameter_dict=args.parameter_dict,
-        project=args.project,
-        location=args.location,
-        experiment=args.experiment,
-        enable_caching=args.enable_caching,
-        service_account=args.service_account,
-    )
-
-
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     run_pipeline_job(**parse_command_line_arguments())
