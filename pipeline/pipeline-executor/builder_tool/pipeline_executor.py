@@ -64,6 +64,11 @@ def parse_command_line_arguments():
     return args
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    run_pipeline_job(**parse_command_line_arguments())
+    args = parse_command_line_arguments()
+    run_pipeline_job(**vars(args))  # works as long as arg names match function params exactly
+
+        parameter_dict=params["parameter_dict"],
+        project=params["project"],
+        location=params["location"],
