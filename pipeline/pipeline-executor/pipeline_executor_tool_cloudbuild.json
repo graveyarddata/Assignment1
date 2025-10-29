@@ -19,6 +19,27 @@
         "push",
         "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1"
       ]
+    },
+    {
+      "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+      "entrypoint": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p Assignment1/pipeline/parameters && gsutil cp gs://assignment1group3/data/parameters.json Assignment1/pipeline/parameters/parameters.json && echo 'Params downloaded to Assignment1/pipeline/parameters/parameters.json'"
+      ]
+    },
+    {
+      "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
+      "entrypoint": "python",
+      "args": [
+        "run_vertex_pipeline.py",
+        "--name", "penguins-train",
+        "--pipeline_def", "Assignment1/pipeline/penguins_pipeline.yaml",
+        "--pipeline_root", "gs://assignment1group3/pipeline_root",
+        "--parameter_dict", "Assignment1/pipeline/parameters/parameters.json",
+        "--project", "$PROJECT_ID",
+        "--location", "${_LOCATION}"
+      ]
     }
   ],
   "options": {
