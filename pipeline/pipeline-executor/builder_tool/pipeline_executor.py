@@ -16,9 +16,6 @@ def run_pipeline_job(
     parameter_dict: str,
     project: str,
     location: str,
-    experiment: str | None = None,
-    enable_caching: bool = False,
-    service_account: str | None = None,
 ):
     # Init AIP (project + regio zijn cruciaal)
     aip.init(project=project, location=location)
@@ -53,28 +50,17 @@ def run_pipeline_job(
 
 def parse_command_line_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--name", required=True, help="Pipeline display name")
-    parser.add_argument("--pipeline_def", required=True,
-                        help="Path to compiled pipeline YAML (gs:// or local)")
-    parser.add_argument("--pipeline_root", required=True,
+    parser.add_argument("--name", type=str, help="Pipeline display name")
+    parser.add_argument("--pipeline_def", type=str, default = "penguins_pipeline.yaml", 
+                        help="Pipeline YAML definition")
+    parser.add_argument("--pipeline_root", type=str,
                         help="GCS path for pipeline root (gs://...)")
-    parser.add_argument("--parameter_dict", required=True,
+    parser.add_argument("--parameter_dict", type=str,
                         help="Local JSON file with parameter key/values")
     parser.add_argument("--project", default=os.getenv("GOOGLE_CLOUD_PROJECT"),
                         help="GCP project id (defaults to env GOOGLE_CLOUD_PROJECT)")
-    parser.add_argument("--location", default=os.getenv("AIP_LOCATION", "us-central1"),
-                        help="Vertex AI region (defaults to env AIP_LOCATION or us-central1)")
-    parser.add_argument("--experiment", default=None,
-                        help="Optional Vertex AI experiment name")
-    parser.add_argument("--enable_caching", action="store_true",
-                        help="Enable Vertex pipeline caching")
-    parser.add_argument("--service_account", default=None,
-                        help="Optional service account email to execute the job")
+    parser.add_argument("--location", type=str, help = "standard location is us-central1")
     args = parser.parse_args()
-
-    if not args.project:
-        parser.error("--project is required (or set env GOOGLE_CLOUD_PROJECT)")
-
     return args
 
 
