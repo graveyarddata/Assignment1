@@ -1,0 +1,10 @@
+{
+  "project_id": "assignment1",
+  "region": "us-central1",
+  "data_uri": "gs://assignment1group3/data/penguins_clean.csv",
+  "pipeline_root": "gs://assignment1group3/runs",
+  "model_dir": "gs://assignment1group3/models",
+  "run_id": "manual-001",
+  "promote_mode": "if_better",
+  "delta": 0.005
+}
