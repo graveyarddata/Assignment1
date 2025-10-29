@@ -5,4 +5,4 @@ https://www.kaggle.com/code/paulgreber/logistic-regression-with-palmer-s-penguin
 Voor de regio gebruiken we overal us-central1 (iowa) 
 
 
----------
+--------
