@@ -28,19 +28,18 @@
         "mkdir -p Assignment1/pipeline/parameters && gsutil cp gs://assignment1group3/data/parameters.json /workspace/Assignment1/pipeline/parameters/parameters.json && echo 'Params downloaded to /workspace/Assignment1/pipeline/parameters/parameters.json'"
       ]
     },
-    {
-      "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
-      "entrypoint": "python",
-      "args": [
-        "/app/run_vertex_pipeline.py",
-        "--name", "penguins-train",
-        "--pipeline_def", "/workspace/Assignment1/pipeline/penguins_pipeline.yaml",
-        "--pipeline_root", "gs://assignment1group3/runs",
-        "--parameter_dict", "/workspace/Assignment1/pipeline/parameters/parameters.json",
-        "--project", "$PROJECT_ID",
-        "--location", "${_LOCATION}"
-      ]
-    }
+  {
+    "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
+    "args": [
+    "--name", "penguins-train",
+    "--pipeline_def", "/workspace/Assignment1/pipeline/penguins_pipeline.yaml",
+    "--pipeline_root", "gs://assignment1group3/runs",
+    "--parameter_dict", "/workspace/Assignment1/pipeline/parameters/parameters.json",
+    "--project", "$PROJECT_ID",
+    "--location", "${_LOCATION}"
+  ]
+  }
+
   ],
   "options": {
     "logging": "CLOUD_LOGGING_ONLY"
