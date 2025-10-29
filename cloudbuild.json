@@ -1,0 +1,54 @@
+{
+  "substitutions": {
+    "_LOCATION": "us-central1",
+    "_REPOSITORY": "mlrepo"
+  },
+  "steps": [
+    {
+      "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+      "entrypoint": "bash",
+      "args": [
+        "-lc",
+        "echo 'Tree check:'; ls -la /workspace; echo 'Find Dockerfile:'; find /workspace -maxdepth 6 -name Dockerfile -print"
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker",
+      "args": [
+        "build",
+        "-t", "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
+        "-f", "pipeline/pipeline-executor/builder_tool/Dockerfile",
+        "pipeline/pipeline-executor/builder_tool"
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker",
+      "args": [
+        "push",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1"
+      ]
+    },
+    {
+      "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+      "entrypoint": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p /workspace/pipeline/parameters && gsutil cp gs://assignment1group3/data/parameters.json /workspace/pipeline/parameters/parameters.json && echo 'Params downloaded to /workspace/pipeline/parameters/parameters.json'"
+      ]
+    },
+    {
+      "name": "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/pipeline-executor:0.0.1",
+      "args": [
+        "--name", "penguins-train",
+        "--pipeline_def", "/workspace/pipeline/penguins_pipeline.yaml",
+        "--pipeline_root", "gs://assignment1group3/runs",
+        "--parameter_dict", "/workspace/pipeline/parameters/parameters.json",
+        "--project", "$PROJECT_ID",
+        "--location", "${_LOCATION}"
+      ]
+    }
+  ],
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY"
+  }
+}
