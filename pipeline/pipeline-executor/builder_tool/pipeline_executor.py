@@ -14,7 +14,7 @@ def run_pipeline_job(
     parameter_dict: str,
     project: str,
     location: str,
-    enable_caching: bool = True,  # <- default so we don't need a CLI flag
+    enable_caching: bool = False,  
 ):
     # Init Vertex AI
     aip.init(project=project, location=location)
