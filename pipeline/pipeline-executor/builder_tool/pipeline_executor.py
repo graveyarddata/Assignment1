@@ -65,10 +65,7 @@ def parse_command_line_arguments():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    args = parse_command_line_arguments()
-    run_pipeline_job(**vars(args))  # works as long as arg names match function params exactly
-
-        parameter_dict=params["parameter_dict"],
-        project=params["project"],
-        location=params["location"],
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO,
+                        format="%(asctime)s %(levelname)s %(message)s")
+    args = parse_command_line_arguments()     # argparse.Namespace
+    run_pipeline_job(**vars(args))            # convert Namespace -> dict
