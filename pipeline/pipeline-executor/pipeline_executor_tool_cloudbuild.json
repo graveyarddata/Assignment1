@@ -1,7 +1,7 @@
 {
   "substitutions": {
     "_LOCATION": "us-central1",
-    "_REPOSITORY": "labrepo"
+    "_REPOSITORY": "mlrepo"
   },
   "steps": [
     {
