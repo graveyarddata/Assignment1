@@ -2,7 +2,7 @@
 
 An end-to-end machine learning project that trains a logistic-regression classifier on the
 Palmer Penguins dataset and serves predictions through a containerised web app on Google
-Cloud Platform. The pipeline is built with Kubeflow / Vertex AI Pipelines, automated with
+Cloud Platform. The pipeline is built with Vertex AI, automated with
 Cloud Build, and the API + UI are deployed to Cloud Run.
 
 The underlying model is adapted from this Kaggle notebook:
